@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "jest --watchAll --maxWorkers=1"
+    "test": "jest --watchAll --maxWorkers=1",
+    "test:ci": "jest --maxWorkers=1"
   },
   "keywords": [],
   "author": "",
