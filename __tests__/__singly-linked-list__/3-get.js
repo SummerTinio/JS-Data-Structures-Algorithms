@@ -36,6 +36,7 @@ describe('get method', () => {
   it('handles edge case: 1 node SLL', () => {
     list.push('lone node');
     expect(list.get(0).val).toBe('lone node');
+    expect(list.head.val === list.tail.val).toBe(true);
   });
 
   it('handles typical case: >1 node SLL', () => {
