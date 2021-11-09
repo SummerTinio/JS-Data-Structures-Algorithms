@@ -25,7 +25,7 @@ class SinglyLinkedList {
     if (this.isEmpty()) {
       this.head = this.tail = new SLLNode(val);
     } else {
-      let newFirstNode = new SLLNode(val);
+      const newFirstNode = new SLLNode(val);
       newFirstNode.next = this.head;
       this.head = newFirstNode;
     }
@@ -75,6 +75,80 @@ class SinglyLinkedList {
     }
   }
 
+  get(idx) {
+    if (!Number.isInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    if (this.isEmpty()) {
+      return -1;
+
+    } else if (this.length === 1) {
+      return this.head;
+    
+    } else {
+      let trav = this.head;
+      let count = idx;
+      while (count > 0) {
+        trav = trav.next;
+        count--;
+      }
+      return trav;
+    }
+  }
+  
+  set(idx, val) {
+    if (!Number.isInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    const nodeToSet = this.get(idx);
+    if (nodeToSet) {
+      nodeToSet.val = val;
+    } else {
+      return -1;
+    }
+    return this;
+  }
+  
+  insert(idx, val) {
+    if (!Number.isInteger(idx)){
+      throw new Error('Invalid index');
+    }
+    
+    if (idx === 0) {
+      // O(1) if empty list
+      // also O(1) if list is not empty
+      // all u need is a pointer to the head
+      return this.unshift(val);
+    }
+    
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    let count = idx;
+    let insertionPoint = this.head;
+    while (count > 0) {
+      insertionPoint = insertionPoint.next;
+      count--;
+    }
+
+    const newNode = new SLLNode(val);
+    newNode.next = insertionPoint.next;
+    insertionPoint.next = newNode;
+    this.length++;
+    return this;
+  }
+  
   isEmpty() {
     return this.head === null;
   }
