@@ -118,6 +118,52 @@ class SinglyLinkedList {
     return this;
   }
   
+  insert(idx, val) {
+    if (!Number.isSafeInteger(idx)){
+      throw new Error('Invalid index');
+    }
+    
+    if (idx === 0) {
+      // O(1) if empty list
+      // also O(1) if list is not empty
+      // all u need is a pointer to the head
+      return this.unshift(val);
+    }
+    
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+    const insertionPoint = this.get(idx - 1);
+    const newNode = new SLLNode(val);
+    newNode.next = insertionPoint.next;
+    insertionPoint.next = newNode;
+    this.length++;
+    return this;
+  }
+
+  remove(idx) {
+    if (!Number.isSafeInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    if (idx === 0 || idx === this.length - 1) {
+      return this.shift();
+    }
+
+    const removalPoint = this.get(idx - 1);
+    const deleted = removalPoint.next;
+    removalPoint.next = deleted.next;
+
+    this.length--;
+
+    deleted.next = null;
+    return deleted;
+  }
+  
   isEmpty() {
     return this.head === null;
   }
@@ -127,104 +173,3 @@ module.exports = {
   SLLNode,
   SinglyLinkedList,
 }
-/** 
- * 
- if (idx === 0 && this.isEmpty()) {
-   return this.push(val);
-   
-   // this.head = this.tail = new SLLNode(val);
-   // this.length++;
-   // return this;
-   
-  } else if (idx === 0 && !this.isEmpty()) {
-    return this.unshift(val);
-    
-    // .push and .unshift already return the list instance
-    // const newHead = new SLLNode(val);
-    // newHead.next = this.head;
-    // this.head = newHead;
-    // this.length++;
-    // return this;
-  }
-  * 
-  */
-/** 
- * 
- insert(idx, val) {
-   if (!Number.isSafeInteger(idx)) {
-     throw new Error('Invalid index');
-   }
-
-   if (this.isEmpty() && idx === 0) {
-     this.head = this.tail = new SLLNode(val);
-     this.length++;
-     return this;
-   } else if (idx === 0) {
-     const newHead = new SLLNode(val);
-     newHead.next = this.head;
-     this.head = newHead;
-     this.length++;
-     return this;
-   }
-
-   if (idx < 0 || idx >= this.length) {
-     return -1;
-   }
-
-   let count = idx;
-   let trav = this.head;
-   while (count > 0) {
-     trav = trav.next;
-     count--;
-   }
-   const insertedNode = new SLLNode(val);
-   insertedNode.next = trav.next;
-   trav.next = insertedNode;
-   this.length++;
-   return this;
- }
- */
-
-/** 
- * implementation below fails the ff. test
- * 
-  insert method › given an index within bounds, handles typical case (a >1 node SLL) › inserts a new node to the correct position     
-
-  expect(received).toBe(expected) // Object.is equality
-
-  Expected: "new value"
-  Received: "B"
- * 
- * 
- insert(idx, val) {
-   if (!Number.isSafeInteger(idx)) {
-     throw new Error('Invalid index');
-   }
-
-   if (!this.isEmpty() && idx === this.length) {
-     return -1;
-   } 
-
-   if (idx < 0 || idx > this.length) {
-     return -1;
-
-   } else if (idx === 0) {
-     return this.unshift(val);
-   
-   } else if (idx === this.length - 1) {
-     return this.push(val);
-   
-   } else {
-     const prev = this.get(idx - 1);
-     const after = prev.next;
-
-     const insertedNode = new SLLNode(val);
-     
-     prev.next = insertedNode;
-     insertedNode.next = after;
-     this.length++;
-     return this;
-   }
-  }
- * 
- */
