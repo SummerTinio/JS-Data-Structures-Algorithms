@@ -11,6 +11,10 @@ describe('insert method', () => {
     it('throws an error when passed a string as an index', () => {
       expect(() => {list.insert('invalid arg', 'any value')}).toThrow();
     });
+
+    it('does NOT type coerce strings (e.g. when passed index of "1"), instead throws an error when this happens', () => {
+      expect(() => {list.insert('1', 'any value')}).toThrow();
+    });
     
     it('throws an error when passed an object as an index', () => {
       expect(() => {list.insert({}, 'any value')}).toThrow();
@@ -78,6 +82,27 @@ describe('insert method', () => {
     });
   });
   
+
+  describe('in the typical case (>1 node SLL): given an index within bounds (0 < idx < list.length) in a >1 node SLL', () => {
+    beforeEach(() => {
+      list.push('A');
+      list.push('B');
+      list.insert(1, 'special!');
+    });
+
+    describe("list.insert(1, 'special') in a 2-item SLL", () => {
+      // 'A' --> 'special!' --> 'B'
+      test('inserts the new node into the correct position', () => {
+        expect(list.head.next.val).toBe('special!');
+      });
+      
+      test('increments length accordingly', () => {
+        // 'A' --> 'special!' --> 'B'
+        expect(list.length).toBe(3);
+      });
+    });
+  });
+
   describe('in the typical case (given a >1 node SLL), and an index within bounds,', () => {
     beforeEach(() => {
       list.push('A');

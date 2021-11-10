@@ -142,26 +142,36 @@ class SinglyLinkedList {
   }
 
   remove(idx) {
+    // invalid arg
     if (!Number.isSafeInteger(idx)) {
       throw new Error('Invalid index');
     }
 
+    // all invalid indices
     if (idx < 0 || idx >= this.length) {
       return -1;
     }
 
-    if (idx === 0 || idx === this.length - 1) {
+    // removing on either end
+    if (idx === 0) {
+      // head
       return this.shift();
+
+    } else if (idx === this.length - 1) {
+      // tail
+      return this.pop();
+    
+    // removal from any point in middle
+    } else {
+      const removalPoint = this.get(idx - 1);
+      const deleted = removalPoint.next;
+      removalPoint.next = deleted.next;
+  
+      this.length--;
+  
+      deleted.next = null;
+      return deleted;
     }
-
-    const removalPoint = this.get(idx - 1);
-    const deleted = removalPoint.next;
-    removalPoint.next = deleted.next;
-
-    this.length--;
-
-    deleted.next = null;
-    return deleted;
   }
   
   isEmpty() {

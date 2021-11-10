@@ -10,6 +10,7 @@ describe('remove method', () => {
   describe('handles invalid arguments:', () => {
     it('throws an error when passed a string as an index', () => {
       expect(() => {list.remove('invalid arg')}).toThrow();
+      expect(() => {list.remove('0')}).toThrow();
     });
     
     it('throws an error when passed an object as an index', () => {
@@ -61,6 +62,14 @@ describe('remove method', () => {
        // expect(list.head.val).toBe('any value');
      });  
      */
+
+    it('does not type coerce to number when passed a string (e.g. "0") as an index, instead throws an Error', () => {
+      list.push('yay');
+      list.push('yay');
+      expect(() => {list.remove(`0`)}).toThrow();
+      expect(() => {list.remove('0')}).toThrow();
+      expect(() => {list.remove('1')}).toThrow();
+    });
     
     describe('in a 1 node SLL,', () => {
       let removedNode;
@@ -88,6 +97,30 @@ describe('remove method', () => {
     });
   });
   
+  describe('in the typical case (>1 node SLL), given an index within bounds (0 < idx < list.length),', () => {
+    beforeEach(() => {
+      list.push('A');
+      list.push('B');
+    });
+    
+    describe("list.remove(1) in a 2-item SLL", () => {
+      test('removes the node from the correct position (head)', () => {
+        expect(list.remove(1).val).toBe('B');
+        expect(list.head.val).toBe('A');
+      });
+
+      test('removes the node from the correct position (tail)', () => {
+        expect(list.remove(0).val).toBe('A');
+        expect(list.head.val).toBe('B');
+      });
+
+      test('decrements length accordingly', () => {
+        list.remove(0);
+        expect(list.length).toBe(1);
+      });
+    });
+  });
+
   describe('given an index within bounds, handles typical case (a >1 node SLL)', () => {
     beforeEach(() => {
       list.push('A');
