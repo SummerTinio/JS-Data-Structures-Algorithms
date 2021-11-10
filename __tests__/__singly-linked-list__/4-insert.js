@@ -65,65 +65,70 @@ describe('insert method', () => {
     });
   });
   
-  describe('given an index within bounds, handles all edge cases:', () => {
-    test('successfully inserts node to a <1 node SLL (Empty List)', () => {
-      list.insert(0, 'any value');
-      expect(list.length).toBe(1);
-      // list.insert(0, 'any value');
-      // expect(list.head.val).toBe('any value');
-    });
-    
-    test('in a 1 node SLL, inserts a new node to the correct position and increments length', () => {
-      list.push('A');
-      list.insert(0, 'new node');
-      expect(list.head.val).toBe('new node');
-      expect(list.tail.val).toBe('A');
-      expect(list.length).toBe(2);
-    });
-  });
-  
+  describe('given a valid index, handles all 3 List Cases ( <1 node, 1 node, >1 node SLL )', () => {
 
-  describe('in the typical case (>1 node SLL): given an index within bounds (0 < idx < list.length) in a >1 node SLL', () => {
-    beforeEach(() => {
-      list.push('A');
-      list.push('B');
-      list.insert(1, 'special!');
-    });
 
-    describe("list.insert(1, 'special') in a 2-item SLL", () => {
-      // 'A' --> 'special!' --> 'B'
-      test('inserts the new node into the correct position', () => {
-        expect(list.head.next.val).toBe('special!');
+      describe('handles all edge cases ( <1 node, 1 node )', () => {
+        test('in a <1 node SLL (Empty List), inserts node at correct position & increments length', () => {
+          list.insert(0, 'any value');
+          expect(list.length).toBe(1);
+          // list.insert(0, 'any value');
+          // expect(list.head.val).toBe('any value');
+        });
+        
+        test('in a 1 node SLL, inserts node at correct position and increments length', () => {
+          list.push('A');
+          list.insert(0, 'new node');
+          expect(list.head.val).toBe('new node');
+          expect(list.tail.val).toBe('A');
+          expect(list.length).toBe(2);
+        });
       });
       
-      test('increments length accordingly', () => {
-        // 'A' --> 'special!' --> 'B'
-        expect(list.length).toBe(3);
-      });
-    });
-  });
-
-  describe('in the typical case (given a >1 node SLL), and an index within bounds,', () => {
-    beforeEach(() => {
-      list.push('A');
-      list.push('B');
-      list.push('C');
-      list.insert(1, 'new value');   
-    });
-      
-    it('increments length upon insertion', () => {
-      // A --> 'new value' --> B --> C --> null
-      expect(list.length).toBe(4);
-    });
     
-    it('inserts a new node to the correct position', () => {
-      // A --> 'new value' --> B --> C --> null
-      expect(list.head.next.val).toBe('new value');
-      
-      list.insert(0, 'new head');
-      // 'new head' --> A --> 'new value' --> B --> C --> null
-      expect(list.head.val).toBe('new head');
-      expect(list.length).toBe(5);
+      describe('handles typical case ( >1 node SLL ):', () => {
+        describe("list.insert(1, 'special') in a 2-item SLL", () => {
+          test('inserts the new node into the correct position', () => {
+            list.push('A');
+            list.push('B');
+            list.insert(1, 'special!');
+            // 'A' --> 'special!' --> 'B'
+            expect(list.head.next.val).toBe('special!');
+          });
+          
+          test('increments length accordingly', () => {
+            list.push('A');
+            list.push('B');
+            list.insert(1, 'special!');
+            // 'A' --> 'special!' --> 'B'
+            expect(list.length).toBe(3);
+          });
+        });
+        
+        describe(`list.insert(1, 'new value') in a 3-item SLL,`, () => {
+          beforeEach(() => {
+            list.push('A');
+            list.push('B');
+            list.push('C');
+            list.insert(1, 'new value');   
+          });
+            
+          it('increments length upon insertion', () => {
+            // A --> 'new value' --> B --> C --> null
+            expect(list.length).toBe(4);
+          });
+          
+          it('inserts a new node to the correct position', () => {
+            // A --> 'new value' --> B --> C --> null
+            expect(list.head.next.val).toBe('new value');
+            
+            list.insert(0, 'new head');
+            // 'new head' --> A --> 'new value' --> B --> C --> null
+            expect(list.head.val).toBe('new head');
+            expect(list.length).toBe(5);
+          });
+        });
+      });
+    
     });
   });
-});
