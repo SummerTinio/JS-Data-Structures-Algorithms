@@ -80,6 +80,8 @@ class SinglyLinkedList {
       throw new Error('Invalid index');
     }
 
+    // handle invalid idx
+    // - also handles edge case: empty list since idx = length
     if (idx < 0 || idx >= this.length) {
       return -1;
     }
@@ -173,11 +175,79 @@ class SinglyLinkedList {
       return deleted;
     }
   }
-  
+
+  reverse() {
+    if (this.isEmpty()) {
+      return -1;
+
+    } else if (this.length === 1) {
+      return this;
+
+    } else {
+      let current = this.head;    
+      
+      // swap in place
+      [this.head, this.tail] = [this.tail, this.head];
+      
+      let beforeCurrent = null;
+      let afterCurrent;
+      
+      // while(current), not while(current.next)
+      //   - since it must go PAST the tail i.e. only exit when current is null
+      //   - current.next only goes up to tail itself
+      while (current) {
+        afterCurrent = current.next; // save a reference to next before modifying link
+        
+        current.next = beforeCurrent; // fix link
+        
+        beforeCurrent = current; // move up 1step
+        current = afterCurrent;
+      }
+      return this; 
+  }
+  }
+
   isEmpty() {
     return this.head === null;
   }
+
+  print() {
+    const headToTail = [];
+    if (!this.isEmpty()) {
+      let trav = this.head;
+      while (trav !== null) {
+        headToTail.push(trav.val);
+        trav = trav.next;
+      }
+      
+    }
+    return headToTail;
+  }
 }
+
+
+/**
+ 
+ const list = new SinglyLinkedList();
+ list.push('a');
+ list.push('b');
+ list.push('c');
+ list.push('d')
+ list.reverse();
+ const printed = list.print();
+ console.log(printed[0])
+ console.log(printed[1])
+ console.log(printed[2])
+ console.log(printed[3])
+ console.log(printed[4])
+
+
+*/
+
+
+
+
+
 
 module.exports = {
   SLLNode,
