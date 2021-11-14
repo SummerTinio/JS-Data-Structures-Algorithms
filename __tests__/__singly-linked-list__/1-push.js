@@ -7,6 +7,11 @@ beforeEach(() => {
 });
 
 describe('push() method', () => {
+  it('returns a list instance', () => {
+    const pushedList = list.push('yay');
+    expect(pushedList instanceof SinglyLinkedList).toBe(true);
+  });
+  
   describe('handles 2 List Appending Cases ( <1 node, >=1 node )', () => {
     it('handles edge case: <1 node SLL (Empty List)', () => {
       list.push('lone item');

@@ -7,6 +7,12 @@ beforeEach(() => {
 });
 
 describe('unshift() method', () => {
+  
+  it('returns a list instance', () => {
+    const pushedList = list.unshift('yay');
+    expect(pushedList instanceof SinglyLinkedList).toBe(true);
+  });
+
   describe('handles 2 List Appending Cases ( <1 node, >=1 node )', () => {
     it('handles edge case: <1 node (Empty List)', () => {
       list.unshift('lone node');
