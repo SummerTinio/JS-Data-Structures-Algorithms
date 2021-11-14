@@ -79,6 +79,85 @@ class DoublyLinkedList {
     removedHead.prev = removedHead.next = null;
     return removedHead;
   }
+
+  get(idx) {
+    if (!Number.isSafeInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    if (!this.head) {
+      return -1;
+    } else if (!this.head.next) {
+      return this.head;
+    }
+
+    // start at first position (head / 0)
+    if (idx <= this.length / 2) {
+      let stepsLeft = idx;
+      let trav = this.head;
+      
+      while (stepsLeft !== 0) {
+        trav = trav.next;
+        stepsLeft--;
+      }
+      return trav;
+  
+    // start at last position (tail / this.length - 1)
+    } else if (idx > this.length / 2) {
+      let stepsLeft = this.length - 1;
+      let trav = this.tail;
+
+      while (stepsLeft !== idx) {
+        trav = trav.prev;
+        stepsLeft--;
+      }
+      return trav;
+    }
+  }
+
+  set(idx, val) {
+    if (!Number.isSafeInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx < 0 || idx >= this.length) {
+      return -1;
+    }
+
+    if (!this.head) {
+      return -1;
+    } else if (!this.head.next) {
+      this.head.val = val;
+      return this;
+    } else {
+      if (idx <= this.length / 2) {
+        let trav = this.head;
+        let stepsLeft = idx;
+  
+        while (stepsLeft !== 0) {
+          trav = trav.next;
+          stepsLeft--;
+        }
+        trav.val = val;
+        return this;
+      } else if (idx > this.length / 2) {
+        let trav = this.tail;
+        let stepsLeft = this.length - 1;
+        
+        while (stepsLeft !== idx) {
+          trav = trav.prev;
+          stepsLeft--;
+        }
+        trav.val = val;
+        return this;
+      }
+    }
+
+  }
 }
 
 module.exports = {
