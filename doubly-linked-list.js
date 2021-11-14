@@ -39,6 +39,46 @@ class DoublyLinkedList {
     this.length++;
     return this;
   }
+
+  pop() {
+    if (!this.head) {
+      return -1;
+    } else if (!this.head.next) {
+      const removedNode = this.head;
+      this.head = this.tail = null;
+      this.length--;
+      return removedNode;
+    } 
+
+    const lastNode = this.tail;
+    const secondToLast = lastNode.prev;
+    secondToLast.next = null;
+
+    this.tail = secondToLast;
+
+    lastNode.next = lastNode.prev = null;
+    this.length--;
+    return lastNode;
+  }
+
+  shift() {
+    if (!this.head) {
+      return -1;
+
+    } else if (!this.head.next) {
+      const loneNode = this.head;
+      this.head = this.tail = null;
+      this.length--;
+      return loneNode;
+    }
+
+    const removedHead = this.head;
+    this.head = this.head.next;
+    this.length--;
+
+    removedHead.prev = removedHead.next = null;
+    return removedHead;
+  }
 }
 
 module.exports = {
