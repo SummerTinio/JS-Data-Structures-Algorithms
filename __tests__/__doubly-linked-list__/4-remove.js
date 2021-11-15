@@ -1,5 +1,5 @@
 const { DLLNode, DoublyLinkedList } = require('../../doubly-linked-list');
-const { forwardTraversal, backwardTraversal } = require('../helpers/traversal');
+const { forwardTraversal, backwardTraversal } = require('../../helpers/traversal');
 
 let list;
 
