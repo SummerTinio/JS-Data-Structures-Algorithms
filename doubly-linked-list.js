@@ -73,7 +73,10 @@ class DoublyLinkedList {
     }
 
     const removedHead = this.head;
+
     this.head = this.head.next;
+    this.head.prev = null;
+
     this.length--;
 
     removedHead.prev = removedHead.next = null;
@@ -157,6 +160,59 @@ class DoublyLinkedList {
       }
     }
 
+  }
+
+  insert(idx, val) {
+    if (!Number.isSafeInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx === 0) return this.unshift(val);
+
+    if (idx < 0 || idx > this.length) return -1;
+
+    if (idx === this.length) return this.push(val);
+
+    const beforeNode = this.get(idx - 1);
+    const afterNode = beforeNode.next;
+
+    const newNode = new DLLNode(val);
+
+    // restore forward link
+    newNode.next = afterNode, afterNode.prev = newNode;
+    // create new link between beforeNode <--> newNode
+    beforeNode.next = newNode, newNode.prev = beforeNode;
+    
+    if (idx === this.length - 1) {
+      this.tail = newNode.next;
+    }
+
+    this.length++;
+    return this;
+  }
+
+  remove(idx) {
+    if (!Number.isSafeInteger(idx)) {
+      throw new Error('Invalid index');
+    }
+
+    if (idx === 0) return this.shift();
+    if (idx < 0 || idx >= this.length) return -1;
+    if (idx === this.length - 1) return this.pop();
+
+    if (!this.head.next) {
+      
+    }
+    const beforeNode = this.get(idx - 1);
+    const removedNode = beforeNode.next;
+    const afterNode = beforeNode.next.next;
+
+    beforeNode.next = afterNode, afterNode.prev = beforeNode;
+    
+    removedNode.next = null, removedNode.prev = null;
+
+    this.length--;
+    return this;
   }
 }
 

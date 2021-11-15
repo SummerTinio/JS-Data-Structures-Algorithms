@@ -1,4 +1,5 @@
 const { DLLNode, DoublyLinkedList } = require('../../doubly-linked-list');
+const { forwardTraversal, backwardTraversal } = require('../helpers/traversal');
 
 let list;
 
@@ -46,6 +47,14 @@ describe('shift method', () => {
     it('LIST: decrements length accordingly', () => {
       list.shift();
       expect(list.length).toBe(2);
+    });
+
+
+    it('LIST: correctly sets .next and .prev on remaining items in list', () => {
+      list.shift();
+      expect(list.head.val).toBe('B');
+      expect(forwardTraversal(list.head)).toBe(list.tail);
+      expect(backwardTraversal(list.tail)).toBe(list.head);
     });
     
     it('NODE: removes the correct node (i.e. the first one)', () => {
