@@ -1,4 +1,5 @@
 const { DoublyLinkedList } = require('../../doubly-linked-list');
+const { forwardTraversal, backwardTraversal } = require('../helpers/traversal');
 
 let list;
 
@@ -84,6 +85,8 @@ describe('push() method', () => {
           expect(list.head.next.next.val).toBe('C');
           expect(list.tail.prev.val).toBe('B');
           expect(list.tail.next).toBe(null);
+          expect(forwardTraversal(list.head)).toBe(list.tail);
+          expect(backwardTraversal(list.tail)).toBe(list.head);
         });
       });
     });

@@ -1,4 +1,5 @@
 const { DLLNode, DoublyLinkedList } = require('../../doubly-linked-list');
+const { forwardTraversal, backwardTraversal } = require('../helpers/traversal');
 
 let list;
 
@@ -42,7 +43,14 @@ describe('pop method', () => {
       expect(list.head.val).toBe('A');
       expect(list.tail.val).toBe('B');
     });
-    
+
+    it('LIST: correctly sets .next and .prev on remaining items in list', () => {
+      list.pop();
+      expect(list.tail.val).toBe('B');
+      expect(forwardTraversal(list.head)).toBe(list.tail);
+      expect(backwardTraversal(list.tail)).toBe(list.head);
+    });
+  
     it('LIST: decrements length accordingly', () => {
       list.pop();
       expect(list.length).toBe(2);
